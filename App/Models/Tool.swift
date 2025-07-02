@@ -10,7 +10,7 @@ public struct Tool: Sendable {
     let annotations: MCP.Tool.Annotations
     private let implementation: @Sendable ([String: Value]) async throws -> Value
 
-    public init<T: Encodable>(
+    public init<T: Encodable & Sendable>(
         name: String,
         description: String,
         inputSchema: JSONSchema,
