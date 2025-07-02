@@ -1,40 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-	<dict>
-		<key>NSHumanReadableCopyright</key>
-		<string>© 2025 Loopwork Limited. All rights reserved.</string>
-
-		<key>LSUIElement</key>
-		<true />
-
-		<key>NSBonjourServices</key>
-		<array>
-			<string>_mcp._tcp</string>
-		</array>
-
-		<key>NSContactsUsageDescription</key>
-		<string>${PRODUCT_NAME} needs access to provide contact information to the MCP server.</string>
-
-		<key>NSCalendarsFullAccessUsageDescription</key>
-		<string>${PRODUCT_NAME} needs access to provide event information to the MCP server.</string>
-
-		<key>NSLocalNetworkUsageDescription</key>
-		<string>${PRODUCT_NAME} uses the local network to connect to the MCP server.</string>
-
-		<key>NSLocationWhenInUseUsageDescription</key>
-		<string>${PRODUCT_NAME} needs access to provide location information to the MCP server.</string>
-
-		<key>NSRemindersFullAccessUsageDescription</key>
-		<string>${PRODUCT_NAME} needs access to provide reminders information to the MCP server.</string>
-
-		<key>SUEnableInstallerLauncherService</key>
-		<true />
-
-		<key>SUFeedURL</key>
-		<string>https://downloads.imcp.app/appcast.xml</string>
-
-		<key>SUPublicEDKey</key>
-		<string>+2ibtYfPSNKpUJsn1R9Ywc1GnjQA5vemVN95d0EzGxg=</string>
-	</dict>
+<dict>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_mcp._tcp</string>
+	</array>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>${PRODUCT_NAME} needs access to provide event information to the MCP server.</string>
+	<key>NSRemindersFullAccessUsageDescription</key>
+	<string>${PRODUCT_NAME} needs access to provide reminders information to the MCP server.</string>
+	<key>SUEnableInstallerLauncherService</key>
+	<true/>
+	<key>SUFeedURL</key>
+	<string>https://downloads.imcp.app/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>+2ibtYfPSNKpUJsn1R9Ywc1GnjQA5vemVN95d0EzGxg=</string>
+</dict>
 </plist>
