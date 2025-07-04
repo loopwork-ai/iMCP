@@ -5,6 +5,7 @@ import OSLog
 import Ontology
 import SwiftUI
 import SystemPackage
+import UserNotifications
 
 import struct Foundation.Data
 import struct Foundation.Date
@@ -287,6 +288,27 @@ final class ServerController: ObservableObject {
         self.serverStatus = status
     }
 
+    private func sendClientConnectionNotification(clientName: String) {
+        let content = UNMutableNotificationContent()
+        content.title = "Client Connected"
+        content.body = "Client '\(clientName)' has connected to iMCP"
+        content.threadIdentifier = "client-connection-\(clientName)"
+
+        let request = UNNotificationRequest(
+            identifier: "client-connection-\(clientName)-\(Date().timeIntervalSince1970)",
+            content: content,
+            trigger: nil
+        )
+
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                log.error("Failed to send notification: \(error.localizedDescription)")
+            } else {
+                log.info("Sent notification for client connection: \(clientName)")
+            }
+        }
+    }
+
     private func showConnectionApprovalAlert(
         clientID: String, approve: @escaping () -> Void, deny: @escaping () -> Void
     ) {
@@ -296,6 +318,10 @@ final class ServerController: ObservableObject {
         if isClientTrusted(clientID) {
             log.notice("Client \(clientID) is already trusted, auto-approving")
             approve()
+
+            // Send notification for trusted connections
+            sendClientConnectionNotification(clientName: clientID)
+
             return
         }
 
@@ -319,7 +345,17 @@ final class ServerController: ObservableObject {
             onApprove: { alwaysTrust in
                 if alwaysTrust {
                     self.addTrustedClient(clientID)
+
+                    // Request notification permissions so that the user can be notified when a trusted client connects
+                    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+                        if let error = error {
+                            log.error("Failed to request notification permissions: \(error.localizedDescription)")
+                        } else {
+                            log.info("Notification permissions granted: \(granted)")
+                        }
+                    }
                 }
+
                 approve()
                 self.cleanupApprovalState()
                 self.handlePendingApprovals(for: clientID, approved: true)
